@@ -1,0 +1,1359 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Tasks</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .username {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .logout-button {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .logout-button:hover {
+            background: #dc2626;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #6b7280;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-title {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .add-card {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 25px;
+        }
+
+        .add-card h2 {
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+
+        .add-form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 12px;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            font-family: Arial, sans-serif;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .description-input {
+            grid-column: 1 / -1;
+        }
+
+        .add-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-button:hover {
+            background: #1d4ed8;
+        }
+
+        .search-card {
+            background: white;
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 18px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+        }
+
+        .search-button {
+            background: #374151;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filter-link {
+            text-decoration: none;
+            padding: 9px 14px;
+            border-radius: 20px;
+            background: white;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+        }
+
+        .filter-link.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .category-filters {
+            margin-bottom: 18px;
+        }
+
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .sort-label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .sort-select {
+            background: white;
+            cursor: pointer;
+        }
+
+        .tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .tasks-header h2 {
+            font-size: 21px;
+        }
+
+        .task-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 14px;
+        }
+
+        .task-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .completed-title {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+
+        .task-description {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .task-description-label {
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .task-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .priority,
+        .category,
+        .due-date,
+        .overdue {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .priority {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .category {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .due-date {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .overdue {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .task-date {
+            color: #9ca3af;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .task-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-button {
+            border: none;
+            cursor: pointer;
+            padding: 7px 10px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .complete-button {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .important-button {
+            background: #fef3c7;
+            color: #d97706;
+            font-size: 18px;
+            width: 38px;
+            height: 36px;
+            padding: 0;
+        }
+
+        .important-button.not-important {
+            background: #f3f4f6;
+            color: #9ca3af;
+        }
+
+        .edit-button {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .delete-button {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .edit-form {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 10px;
+        }
+
+        .edit-description {
+            grid-column: 1 / -1;
+            min-height: 80px;
+        }
+
+        .empty {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 40px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .empty h3 {
+            margin: 10px 0 6px;
+        }
+
+        .important-heading {
+            color: #d97706;
+        }
+
+        @media (max-width: 900px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .add-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .edit-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .container {
+                width: 92%;
+                margin: 25px auto;
+            }
+
+            .navbar .username {
+                display: none;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+
+            .add-form {
+                grid-template-columns: 1fr;
+            }
+
+            .description-input {
+                grid-column: auto;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .sort-container {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .task-top {
+                flex-direction: column;
+            }
+
+            .task-actions {
+                width: 100%;
+            }
+
+            .edit-form {
+                grid-template-columns: 1fr;
+            }
+
+            .edit-description {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ✅ My Tasks
+        </div>
+
+        <div class="user-section">
+
+            <span class="username">
+                Hello, {{ user.username }}
+            </span>
+
+            <form
+                method="POST"
+                action="{% url 'logout' %}"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="logout-button"
+                >
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <!-- Heading -->
+
+        <div class="heading">
+
+            <h1>
+                My Tasks
+            </h1>
+
+            <p>
+                Organize your day, stay focused and get things done.
+            </p>
+
+        </div>
+
+
+        <!-- Statistics -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Total Tasks
+                </div>
+
+                <div class="stat-number">
+                    {{ total_tasks }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Pending
+                </div>
+
+                <div class="stat-number">
+                    {{ pending_tasks }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Completed
+                </div>
+
+                <div class="stat-number">
+                    {{ completed_tasks }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Overdue
+                </div>
+
+                <div class="stat-number">
+                    {{ overdue_tasks }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Add Task -->
+
+        <div class="add-card">
+
+            <h2>
+                ➕ Add New Task
+            </h2>
+
+            <form
+                method="POST"
+                class="add-form"
+            >
+
+                {% csrf_token %}
+
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Enter task title"
+                    required
+                >
+
+
+                <select name="priority">
+
+                    <option value="low">
+                        🟢 Low
+                    </option>
+
+                    <option
+                        value="medium"
+                        selected
+                    >
+                        🟡 Medium
+                    </option>
+
+                    <option value="high">
+                        🔴 High
+                    </option>
+
+                </select>
+
+
+                <select name="category">
+
+                    <option value="study">
+                        📚 Study
+                    </option>
+
+                    <option value="work">
+                        💼 Work
+                    </option>
+
+                    <option value="personal">
+                        👤 Personal
+                    </option>
+
+                    <option value="health">
+                        ❤️ Health
+                    </option>
+
+                    <option
+                        value="other"
+                        selected
+                    >
+                        📌 Other
+                    </option>
+
+                </select>
+
+
+                <input
+                    type="date"
+                    name="due_date"
+                >
+
+
+                <button
+                    type="submit"
+                    name="add_task"
+                    class="add-button"
+                >
+                    Add Task
+                </button>
+
+
+                <!-- Description -->
+
+                <textarea
+                    name="description"
+                    class="description-input"
+                    placeholder="📝 Add a description or notes (optional)"
+                ></textarea>
+
+            </form>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <div class="search-card">
+
+            <form
+                method="GET"
+                class="search-form"
+            >
+
+                <input
+                    type="text"
+                    name="search"
+                    class="search-input"
+                    placeholder="🔎 Search tasks..."
+                    value="{{ search_query }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="filter"
+                    value="{{ current_filter }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="category"
+                    value="{{ current_category }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="sort"
+                    value="{{ current_sort }}"
+                >
+
+                <button
+                    type="submit"
+                    class="search-button"
+                >
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Status Filters -->
+
+        <div class="filters">
+
+            <a
+                href="?filter=all&category={{ current_category }}&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_filter == 'all' %}active{% endif %}"
+            >
+                All
+            </a>
+
+            <a
+                href="?filter=pending&category={{ current_category }}&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_filter == 'pending' %}active{% endif %}"
+            >
+                Pending
+            </a>
+
+            <a
+                href="?filter=completed&category={{ current_category }}&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_filter == 'completed' %}active{% endif %}"
+            >
+                Completed
+            </a>
+
+        </div>
+
+
+        <!-- Category Filters -->
+
+        <div class="filters category-filters">
+
+            <a
+                href="?filter={{ current_filter }}&category=all&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_category == 'all' %}active{% endif %}"
+            >
+                All Categories
+            </a>
+
+            <a
+                href="?filter={{ current_filter }}&category=study&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_category == 'study' %}active{% endif %}"
+            >
+                📚 Study
+            </a>
+
+            <a
+                href="?filter={{ current_filter }}&category=work&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_category == 'work' %}active{% endif %}"
+            >
+                💼 Work
+            </a>
+
+            <a
+                href="?filter={{ current_filter }}&category=personal&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_category == 'personal' %}active{% endif %}"
+            >
+                👤 Personal
+            </a>
+
+            <a
+                href="?filter={{ current_filter }}&category=health&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_category == 'health' %}active{% endif %}"
+            >
+                ❤️ Health
+            </a>
+
+            <a
+                href="?filter={{ current_filter }}&category=other&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_category == 'other' %}active{% endif %}"
+            >
+                📌 Other
+            </a>
+
+        </div>
+
+
+        <!-- Important Filter -->
+
+        <div class="filters">
+
+            <a
+                href="?filter=important&category={{ current_category }}&sort={{ current_sort }}&search={{ search_query }}"
+                class="filter-link {% if current_filter == 'important' %}active{% endif %}"
+            >
+                ⭐ Important
+            </a>
+
+        </div>
+
+
+        <!-- Sorting -->
+
+        <form
+            method="GET"
+            class="sort-container"
+        >
+
+            <input
+                type="hidden"
+                name="filter"
+                value="{{ current_filter }}"
+            >
+
+            <input
+                type="hidden"
+                name="category"
+                value="{{ current_category }}"
+            >
+
+            <input
+                type="hidden"
+                name="search"
+                value="{{ search_query }}"
+            >
+
+            <label
+                for="sort"
+                class="sort-label"
+            >
+                🔃 Sort By:
+            </label>
+
+
+            <select
+                name="sort"
+                id="sort"
+                class="sort-select"
+                onchange="this.form.submit()"
+            >
+
+                <option
+                    value="newest"
+                    {% if current_sort == 'newest' %}selected{% endif %}
+                >
+                    🆕 Newest First
+                </option>
+
+                <option
+                    value="oldest"
+                    {% if current_sort == 'oldest' %}selected{% endif %}
+                >
+                    🕐 Oldest First
+                </option>
+
+                <option
+                    value="due_date"
+                    {% if current_sort == 'due_date' %}selected{% endif %}
+                >
+                    📅 Due Date
+                </option>
+
+                <option
+                    value="priority"
+                    {% if current_sort == 'priority' %}selected{% endif %}
+                >
+                    🔴 Priority
+                </option>
+
+            </select>
+
+        </form>
+
+
+        <!-- Tasks Heading -->
+
+        <div class="tasks-header">
+
+            <h2>
+
+                {% if current_filter == 'important' %}
+
+                    <span class="important-heading">
+                        ⭐ Important Tasks
+                    </span>
+
+                {% else %}
+
+                    Your Tasks
+
+                {% endif %}
+
+            </h2>
+
+        </div>
+
+
+        <!-- Task List -->
+
+        {% if tasks %}
+
+
+            {% for task in tasks %}
+
+                <div class="task-card">
+
+
+                    <div class="task-top">
+
+
+                        <!-- Task Content -->
+
+                        <div class="task-content">
+
+                            <div
+                                class="task-title {% if task.completed %}completed-title{% endif %}"
+                            >
+
+                                {% if task.important %}
+                                    ⭐
+                                {% endif %}
+
+                                {{ task.title }}
+
+                            </div>
+
+
+                            <!-- Task Description -->
+
+                            {% if task.description %}
+
+                                <div class="task-description">
+
+                                    <span class="task-description-label">
+                                        📝 Notes:
+                                    </span>
+
+                                    {{ task.description }}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="task-meta">
+
+
+                                <!-- Priority -->
+
+                                <span class="priority">
+
+                                    {% if task.priority == 'high' %}
+
+                                        🔴 High
+
+                                    {% elif task.priority == 'medium' %}
+
+                                        🟡 Medium
+
+                                    {% else %}
+
+                                        🟢 Low
+
+                                    {% endif %}
+
+                                </span>
+
+
+                                <!-- Category -->
+
+                                <span class="category">
+
+                                    {% if task.category == 'study' %}
+
+                                        📚 Study
+
+                                    {% elif task.category == 'work' %}
+
+                                        💼 Work
+
+                                    {% elif task.category == 'personal' %}
+
+                                        👤 Personal
+
+                                    {% elif task.category == 'health' %}
+
+                                        ❤️ Health
+
+                                    {% else %}
+
+                                        📌 Other
+
+                                    {% endif %}
+
+                                </span>
+
+
+                                <!-- Due Date -->
+
+                                {% if task.due_date %}
+
+                                    {% if task.is_overdue %}
+
+                                        <span class="overdue">
+                                            ⚠️ Overdue: {{ task.due_date }}
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="due-date">
+                                            📅 Due: {{ task.due_date }}
+                                        </span>
+
+                                    {% endif %}
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                            <div class="task-date">
+
+                                Created:
+                                {{ task.date_label }}
+                                at
+                                {{ task.time_label }}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Task Actions -->
+
+                        <div class="task-actions">
+
+
+                            <!-- Complete -->
+
+                            <form method="POST">
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="task_id"
+                                    value="{{ task.id }}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    name="complete_task"
+                                    class="action-button complete-button"
+                                    title="Toggle completion"
+                                >
+
+                                    {% if task.completed %}
+
+                                        ↩️
+
+                                    {% else %}
+
+                                        ✓
+
+                                    {% endif %}
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- Important -->
+
+                            <form method="POST">
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="task_id"
+                                    value="{{ task.id }}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    name="important_task"
+                                    class="action-button important-button {% if not task.important %}not-important{% endif %}"
+                                    title="Toggle important"
+                                >
+
+                                    {% if task.important %}
+
+                                        ⭐
+
+                                    {% else %}
+
+                                        ☆
+
+                                    {% endif %}
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- Delete -->
+
+                            <form method="POST">
+
+                                {% csrf_token %}
+
+                                <input
+                                    type="hidden"
+                                    name="task_id"
+                                    value="{{ task.id }}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    name="delete_task"
+                                    class="action-button delete-button"
+                                    title="Delete task"
+                                >
+                                    🗑️
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Edit Form -->
+
+                    <form
+                        method="POST"
+                        class="edit-form"
+                    >
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="task_id"
+                            value="{{ task.id }}"
+                        >
+
+
+                        <input
+                            type="text"
+                            name="new_title"
+                            value="{{ task.title }}"
+                            required
+                        >
+
+
+                        <select name="new_priority">
+
+                            <option
+                                value="low"
+                                {% if task.priority == 'low' %}selected{% endif %}
+                            >
+                                🟢 Low
+                            </option>
+
+                            <option
+                                value="medium"
+                                {% if task.priority == 'medium' %}selected{% endif %}
+                            >
+                                🟡 Medium
+                            </option>
+
+                            <option
+                                value="high"
+                                {% if task.priority == 'high' %}selected{% endif %}
+                            >
+                                🔴 High
+                            </option>
+
+                        </select>
+
+
+                        <select name="new_category">
+
+                            <option
+                                value="study"
+                                {% if task.category == 'study' %}selected{% endif %}
+                            >
+                                📚 Study
+                            </option>
+
+                            <option
+                                value="work"
+                                {% if task.category == 'work' %}selected{% endif %}
+                            >
+                                💼 Work
+                            </option>
+
+                            <option
+                                value="personal"
+                                {% if task.category == 'personal' %}selected{% endif %}
+                            >
+                                👤 Personal
+                            </option>
+
+                            <option
+                                value="health"
+                                {% if task.category == 'health' %}selected{% endif %}
+                            >
+                                ❤️ Health
+                            </option>
+
+                            <option
+                                value="other"
+                                {% if task.category == 'other' %}selected{% endif %}
+                            >
+                                📌 Other
+                            </option>
+
+                        </select>
+
+
+                        <input
+                            type="date"
+                            name="new_due_date"
+                            value="{{ task.due_date|date:'Y-m-d' }}"
+                        >
+
+
+                        <button
+                            type="submit"
+                            name="edit_task"
+                            class="action-button edit-button"
+                        >
+                            ✏️ Update
+                        </button>
+
+
+                        <!-- Edit Description -->
+
+                        <textarea
+                            name="new_description"
+                            class="edit-description"
+                            placeholder="📝 Edit task description or notes"
+                        >{{ task.description }}</textarea>
+
+
+                    </form>
+
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                {% if current_filter == 'important' %}
+
+                    ⭐
+
+                    <h3>
+                        No important tasks
+                    </h3>
+
+                    <p>
+                        Mark tasks with ⭐ to see them here.
+                    </p>
+
+                {% elif search_query %}
+
+                    🔎
+
+                    <h3>
+                        No tasks found
+                    </h3>
+
+                    <p>
+                        Try searching with a different keyword.
+                    </p>
+
+                {% else %}
+
+                    📝
+
+                    <h3>
+                        No tasks yet
+                    </h3>
+
+                    <p>
+                        Add your first task above.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</body>
+
+</html>
+
