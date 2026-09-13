@@ -1,3 +1,4 @@
+
 venv/
 __pycache__/
 *.py[cod]
@@ -6,3 +7,5 @@ __pycache__/
 .DS_Store
 .vscode/
 .idea/
+staticfiles/
+
